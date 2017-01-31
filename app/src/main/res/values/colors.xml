@@ -6,4 +6,6 @@
 
     <color name="bgUnselected">#ffffff</color>
     <color name="bgSelected">#ececec</color>
+    <color name="bgInstalled">#e0ffd3</color>
+
 </resources>

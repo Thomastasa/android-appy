@@ -65,19 +65,29 @@ public class AppAdapter extends ArrayAdapter<AppItemObject> {
                 }
             });
 
-            itemWrap.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(item.isSelected()){
-                        item.setSelected(false);
-                        itemWrap.setBackgroundResource(R.color.bgUnselected);
-                    }else{
-                        item.setSelected(true);
-                        itemWrap.setBackgroundResource(R.color.bgSelected);
-                    }
-                    cb.update();
+            if(item.isInstalled()){
+                itemWrap.setBackgroundResource(R.color.bgInstalled);
+            }else{
+
+                if(item.isSelected()){
+                    itemWrap.setBackgroundResource(R.color.bgSelected);
+                }else{
+                    itemWrap.setBackgroundResource(R.color.bgUnselected);
                 }
-            });
+                itemWrap.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(item.isSelected()){
+                            item.setSelected(false);
+                            itemWrap.setBackgroundResource(R.color.bgUnselected);
+                        }else{
+                            item.setSelected(true);
+                            itemWrap.setBackgroundResource(R.color.bgSelected);
+                        }
+                        cb.update();
+                    }
+                });
+            }
 
             appName.setText(item.getAppTitle());
             packageName.setText(item.getAppPackage());

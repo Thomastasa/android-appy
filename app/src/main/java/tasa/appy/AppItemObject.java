@@ -5,8 +5,11 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
 public class AppItemObject implements Serializable {
 
@@ -27,19 +30,21 @@ public class AppItemObject implements Serializable {
     }
 
     public String toSavedString(){
-        return appTitle +","+appPackage+","+Utility.convertDrawableToBase64(appIcon);
+        return appTitle +"~"+appPackage+"~"+Utility.convertDrawableToBase64(appIcon);
     }
 
     public AppItemObject fromSavedString(Context context, String savedData){
         AppItemObject d = new AppItemObject();
-        String[] data = savedData.split(",");
+        List<String> data = Arrays.asList(savedData.split("~"));
+        Log.e("__size","is " + data.size());
         d.selected = false;
         d.installed = false;
-        d.appTitle = data[0];
-        d.appPackage = data[1];
-        Drawable icon = Utility.convertBase64ToDrawable(context, data[2]);
-        if(icon != null){
-            d.appIcon = icon;
+        try{
+            d.appTitle = data.get(0);
+            d.appPackage = data.get(1);
+            d.appIcon = Utility.convertBase64ToDrawable(context, data.get(2));
+        }catch(Exception e){
+            e.printStackTrace();
         }
         return d;
     }
