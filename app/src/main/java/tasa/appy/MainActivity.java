@@ -215,6 +215,7 @@ public class MainActivity extends AppCompatActivity {
         fileList = folder.list(filter);
         if(fileList.length > 0){
             AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            builder.setTitle("Select Backup");
             builder.setItems(fileList, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -238,10 +239,23 @@ public class MainActivity extends AppCompatActivity {
         if(fileString.length() > 0){
             Log.e("__file",fileString);
 
+            prettyFileName(fileString);
+
         }
         if(error){
             App.showAlert(mContext, err);
         }
+    }
+
+    private String prettyFileName(String ugly){
+        String pretty = "";
+        ugly.replace("appy_backup_","").replace(".xml","");
+        String[] parts = ugly.split("_");
+        Log.e("__parts",parts.toString() + "");
+
+
+
+        return pretty;
     }
 
     // check permission: write external
